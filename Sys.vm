@@ -38,32 +38,29 @@ return
 // result is at the top of the stack.
 //
 function Sys.shiftLeft 2
- pop temp 0       // temp 0 ← y (shift count)
-    pop temp 1       // temp 1 ← x (value to be shifted)
+pop temp 0       
+pop temp 1       
 
-    label SHIFT_LOOP
-        // Check if shift count > 0.
-        push temp 0
-        push constant 0
-        gt         // if (y > 0) returns -1 (true) else 0
-        if-goto SHIFT_DO
-        go-to q2end
+label q2loop
+    push temp 0
+    push constant 0
+    gt         
+    if-goto q2addlabel
+    goto q2end
 
-    label SHIFT_DO
-        // Double x: x = x + x.
-        push temp 1
-        push temp 1
-        add
-        pop temp 1
-        // Decrement shift count: y = y - 1.
-        push temp 0
-        push constant 1
-        sub
-        pop temp 0
-        go-to SHIFT_LOOP
-    label q2end
-        push temp 1
-        return
+label q2addlabel
+    push temp 1
+    push temp 1
+    add
+    pop temp 1
+    push temp 0
+    push constant 1
+    sub
+    pop temp 0
+    goto q2loop
+label q2end
+    push temp 1
+    return
 
 
 //// COMPUTE THE PARITY OF THE BOTTOM 15 BITS OF AN INTEGER.
@@ -155,18 +152,27 @@ label endqu3
 // result is at the top of the stack.
 //
 function Sys.encode 0
-    push argument 0
-    push constant 32767  
-    and
-    pop temp 1           
-    push temp 1
-    call Sys.computeParity 1
-    pop temp 0           
+    pop temp 0      
     push temp 0
-    push constant 15
-    call Sys.shiftLeft 2
+    call Sys.computeParity 1
+    pop temp 1       
     push temp 1
-    or
+    if-goto q3set
+    goto q3clear
+    label q3set
+        push temp 0
+        push constant 32768   
+        or
+        pop temp 2
+        goto q3end
+    label q3clear
+        push temp 0
+        push constant 32767   
+        and
+        pop temp 2
+        goto q3end
+    label q3end
+        push temp 2        
     return
 
 
