@@ -11,18 +11,22 @@
 // result is at the top of the stack.
 //
 function Sys.xor 0
+    //NOT A
+    push argument 0   
+    not
+    push argument 1   
+    and               
+    push temp 0
     pop temp 0
-    pop temp 1
-    push temp 0
-    push temp 1
+    //NOT B
+    push argument 1   
     not
-    and
-    push temp 1
+    push argument 0   
+    and               
+    // x XOR y = (x AND (NOT y)) OR ((NOT x) and y)
     push temp 0
-    not
-    and
     or
-    return
+return
 
 
 
