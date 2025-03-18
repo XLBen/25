@@ -11,10 +11,10 @@
 // result is at the top of the stack.
 //
 function Sys.xor 0
-    push temp 0
-    push temp 1
     pop temp 0
     pop temp 1
+    push temp 0
+    push temp 1
     not
     and
     push temp 1
