@@ -11,24 +11,20 @@
 // result is at the top of the stack.
 //
 function Sys.xor 0
-    //NOT A
-    push argument 0   
-    not
-    push argument 1   
-    and               
-    push temp 0
-    pop temp 0
-    //NOT B
-    push argument 1   
-    not
-    push argument 0   
-    and               
-    // x XOR y = (x AND (NOT y)) OR ((NOT x) and y)
-    push temp 0
-    or
+    pop temp 0       
+    pop temp 1       
+    push temp 1      
+    push temp 0      
+    not              
+    and              
+    pop temp 2       
+    push temp 1      
+    not              
+    push temp 0      
+    and              
+    push temp 2      
+    or               
 return
-
-
 
 //// SHIFT A VALUE LEFT BY REPEATED ADDITION.
 // This function takes two arguments and pushes the first argument
@@ -42,28 +38,32 @@ return
 // result is at the top of the stack.
 //
 function Sys.shiftLeft 2
-    push argument 0
-    pop local 0
-    push argument 1
-    pop local 1
-    label beginqu2
-    push local 1
-    push constant 0
-    eq
-    if-goto endqu2
-    push local 0
-    push local 0
-    add
-    pop local 0
-    push local 1
-    push constant 1
-    sub
-    pop local 1
-    goto beginqu2
-    label endqu2
-    push local 0
-return
+ pop temp 0       // temp 0 ← y (shift count)
+    pop temp 1       // temp 1 ← x (value to be shifted)
 
+    label SHIFT_LOOP
+        // Check if shift count > 0.
+        push temp 0
+        push constant 0
+        gt         // if (y > 0) returns -1 (true) else 0
+        if-goto SHIFT_DO
+        go-to q2end
+
+    label SHIFT_DO
+        // Double x: x = x + x.
+        push temp 1
+        push temp 1
+        add
+        pop temp 1
+        // Decrement shift count: y = y - 1.
+        push temp 0
+        push constant 1
+        sub
+        pop temp 0
+        go-to SHIFT_LOOP
+    label q2end
+        push temp 1
+        return
 
 
 //// COMPUTE THE PARITY OF THE BOTTOM 15 BITS OF AN INTEGER.
