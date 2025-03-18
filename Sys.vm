@@ -143,7 +143,7 @@ label qthreeend
 // stack, so that, from the point of view of the callee, the
 // result is at the top of the stack.
 //
-function Sys.encode 0
+function Sys.encode 1
 push argument 0
 pop temp 0
 push temp 0
@@ -167,3 +167,19 @@ label qfourend
 
 
 
+// The emulator will start executing from here. You can modify
+// the code below while testing and debugging your code, but
+// please revert your changes before submitting to Gradescope;
+// otherwise, your submission will most likely fail all tests.
+//
+// A better way to test your code is to use the supplied file
+//   Sys.tst
+// with the virtual machine emulator. Please do not submit this
+// file to Gradescope, as this will cause your submission to be
+// rejected.
+//
+function Sys.init 0
+    call Sys.encode 1
+
+label WHILE
+    goto WHILE
