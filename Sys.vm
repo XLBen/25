@@ -167,19 +167,3 @@ label qfourend
 
 
 
-// The emulator will start executing from here. You can modify
-// the code below while testing and debugging your code, but
-// please revert your changes before submitting to Gradescope;
-// otherwise, your submission will most likely fail all tests.
-//
-// A better way to test your code is to use the supplied file
-//   Sys.tst
-// with the virtual machine emulator. Please do not submit this
-// file to Gradescope, as this will cause your submission to be
-// rejected.
-//
-function Sys.init 0
-    call Sys.encode 1
-
-label WHILE
-    goto WHILE
