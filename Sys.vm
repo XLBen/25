@@ -11,24 +11,18 @@
 // result is at the top of the stack.
 //
 function Sys.xor 0
-pop temp 0
-pop temp 1
-push temp1
-push temp0
-add
-pop temp3
-push temp1
-push temp 0
-and
-pop temp2
-push temp2
-push temp2
-add
-pop temp4 
-push temp3
-push temp4
-sub
-return
+    push temp 0
+    push temp 1
+    pop temp 0
+    pop temp 1
+    not
+    and
+    push temp 1
+    push temp 0
+    not
+    and
+    or
+    return
 
 
 
